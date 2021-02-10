@@ -1,0 +1,10 @@
+<div class="content" (click)="onItemClick()">
+  <div class="icon">
+    <i class="eva eva-{{icon}}"></i>
+  </div>
+  <div class="label">
+    {{ label }}
+  </div>
+  <i *ngIf="!completed" class="not-completed eva eva-arrow-ios-forward-outline"></i>
+  <i *ngIf="completed" class="completed eva eva-checkmark-circle-2"></i>
+</div>

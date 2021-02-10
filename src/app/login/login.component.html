@@ -1,0 +1,32 @@
+<ion-content class="login-page">
+  <div class="container">
+    <img class="header" src="assets/image/openvino-tagline.png">
+    <div class="creating-content" *ngIf="creating">
+      <div id="mnemonic" class="mnemonic ion-text-center">
+        {{ mnemonic }}
+      </div>
+      <ion-button class="ion-text-uppercase" fill="clear" (click)="copyMnemonic()">{{ 'login.copy' | translate }}</ion-button>
+    </div>
+    <div class="importing-content" *ngIf="importing">
+      <ion-item>
+        <ion-label position="floating">{{'login.enter-mnemonic' | translate}}</ion-label>
+        <ion-textarea [(ngModel)]="mnemonic" autofocus="true"></ion-textarea>
+      </ion-item>
+    </div>
+
+    <div class="footer" *ngIf="!creating && !importing">
+      <ion-button expand="block" (click)="createAccount()">{{ 'login.create' | translate }}</ion-button>
+      <ion-button fill="clear" (click)="importAccount()">{{ 'login.import' | translate }}</ion-button>
+    </div>
+
+    <div class="footer creating" *ngIf="creating">
+      <i class="back eva eva-arrow-back-outline" (click)="reset()"></i>
+      <ion-button (click)="onNext()">{{ 'login.next' | translate }}</ion-button>
+    </div>
+
+    <div class="footer importing" *ngIf="importing">
+      <i class="back eva eva-arrow-back-outline" (click)="reset()"></i>
+      <ion-button (click)="onNext()" [disabled]="!validateMnemonic()">{{ 'login.next' | translate }}</ion-button>
+    </div>
+  </div>
+</ion-content>

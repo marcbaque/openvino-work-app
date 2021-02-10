@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "openvino-work-app",
+  "appId": "com.openvino.work",
+  "appName": "OpenVino Work",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

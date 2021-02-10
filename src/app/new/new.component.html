@@ -1,0 +1,66 @@
+<ion-content class="new-page">
+  <div class="container">
+    <div class="header">
+      <i class="back eva eva-arrow-back-outline" (click)="back()"></i>
+      {{ 'new.title' | translate }}
+    </div>
+    <div class="content">
+      <ion-datetime #startDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:00Z"></ion-datetime>
+      <ion-datetime #endDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:01Z"></ion-datetime>
+      <new-item 
+        icon="alert-circle-outline" 
+        [label]="getTaskTypeLabel()" 
+        [completed]="newItem.name" 
+        (onClick)="openTaskType()"
+      ></new-item>
+      <new-item 
+        icon="scissors-outline" 
+        [label]="getToolsLabel()" 
+        [completed]="newItem.tools" 
+        (onClick)="openTools()"
+      ></new-item>
+      <new-item 
+        icon="alert-circle-outline" 
+        [label]="getChemicalLabel()" 
+        [completed]="newItem.chemicals" 
+        (onClick)="openChemicals()"
+      ></new-item>
+      <new-item 
+        icon="calendar-outline" 
+        [label]="getStartLabel()" 
+        [completed]="newItem.startDate" 
+        (onClick)="openStart()"
+      ></new-item>
+      <new-item 
+        icon="calendar-outline" 
+        [label]="getEndLabel()" 
+        [completed]="newItem.endDate" 
+        (onClick)="openEnd()"
+      ></new-item>
+      <new-item 
+        icon="map-outline" 
+        [label]="getLocationStartLabel()" 
+        [completed]="newItem.locationIni" 
+        (onClick)="openLocationStart()"
+      ></new-item>
+      <new-item 
+        icon="map-outline" 
+        [label]="getLocationEndLabel()" 
+        [completed]="newItem.locationEnd" 
+        (onClick)="openLocationEnd()"
+      ></new-item>
+      <new-item 
+        icon="attach-2" 
+        [label]="getNotesLabel()" 
+        [completed]="newItem.notes" 
+        (onClick)="openNotes()"
+      ></new-item>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border footer">
+  <ion-toolbar>
+    <ion-button expand="block">Create</ion-button>
+  </ion-toolbar>
+</ion-footer>

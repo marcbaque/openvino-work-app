@@ -1,0 +1,25 @@
+{
+    "login": {
+        "create": "Create account",
+        "import": "Import account",
+        "copy": "Copy",
+        "next": "Next",
+        "enter-mnemonic": "Enter mnemonic..."
+    },
+    "home": {
+        "title": "Task list",
+        "public-key": "Public key",
+        "domain": "Domain"
+    },
+    "new": {
+        "title": "Create new task",
+        "type": "Task type",
+        "tools": "Tools",
+        "chemicals": "Chemicals",
+        "start": "Start date",
+        "end": "End date",
+        "location-start": "Inital location",
+        "location-end": "End location",
+        "notes": "Notes"
+    }
+}

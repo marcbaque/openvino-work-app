@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="title">
+    {{ item.name }}
+  </div>
+  <div class="footer">
+    <div class="date">
+      {{ item.startDate | date: 'd/M/yy'}}
+    </div>
+    <div class="hour">
+      {{ item.startDate | date: 'HH:mm'}} - {{ item.endDate | date: 'HH:mm'}}
+    </div>
+  </div>
+</div>

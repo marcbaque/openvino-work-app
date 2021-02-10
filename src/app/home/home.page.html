@@ -1,20 +1,38 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="home-page">
+  <div class="container">
+    <div class="header">
+      <div class="title">{{ 'home.title' | translate }}</div>
+      <div class="actions">
+        <ion-icon name="person-outline" (click)="openProfile()"></ion-icon>
+        <ion-icon name="add-outline" style="font-size: 2.6rem;" (click)="newItem()"></ion-icon>
+      </div>
+    </div>
+    <div class="list">
+      <work-item *ngFor="let work of workList" [item]="work"></work-item>
+    </div>
   </div>
 </ion-content>
+<ion-bottom-sheet 
+    [hideCloseButton]="true"
+    [roundBorderOnTop]="true"
+    [(state)]="profileState"
+  >
+  
+  <ion-item>
+    <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+    <ion-label>
+      <h3>{{ 'home.public-key' | translate }}</h3>
+      <p> {{ account }} </p>
+    </ion-label>
+    <ion-button fill="clear" slot="end" (click)="copyPublicKey()">
+      <ion-icon name="copy-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="domain">
+    <ion-icon name="at-outline" slot="start"></ion-icon>
+    <ion-label>
+      <h3>{{ 'home.domain' | translate }}</h3>
+      <p> {{ domain }} </p>
+    </ion-label>
+  </ion-item>
+</ion-bottom-sheet>
