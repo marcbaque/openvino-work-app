@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { WorkModel } from '../../work.model';
 
 @Component({
@@ -10,6 +11,12 @@ export class WorkItemComponent {
 
   @Input() public item: WorkModel;
 
-  constructor() {}
+  public typeLabels: any;
+
+  constructor(
+    translate: TranslateService
+  ) {
+    this.typeLabels = translate.instant('types');
+  }
 
 }

@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './core/auth.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,14 @@ export class AppComponent {
   }
 
   initializeApp() {
-    if (this.authService.isAuthenticated()) {
+    let authenticated = this.authService.isAuthenticated();
+    if (authenticated) {
       this.navController.navigateRoot('home')
     } else {
-      this.navController.navigateRoot('login')
+      this.authService.authenticate().subscribe(res => {
+        if (res) return this.navController.navigateRoot('home');
+        return this.navController.navigateRoot('login');
+      });
     }
 
     this.translate.setDefaultLang('en');

@@ -7,8 +7,11 @@
         <ion-icon name="add-outline" style="font-size: 2.6rem;" (click)="newItem()"></ion-icon>
       </div>
     </div>
-    <div class="list">
+    <div class="list" *ngIf="workList && workList.length > 0">
       <work-item *ngFor="let work of workList" [item]="work"></work-item>
+    </div>
+    <div class="empty-state" *ngIf="!workList || workList.length <= 0">
+      {{ 'home.empty-state' | translate }}
     </div>
   </div>
 </ion-content>

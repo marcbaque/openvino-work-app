@@ -19,8 +19,10 @@ export class NewPage implements OnInit {
 
   public typeLabels = {};
   public toolLabels = {};
-  public chemicalLabels = {};
+  public chemicalLabels: { name: string, value: string }[][];
   public locationLabels: { name: string, value: string }[][];
+
+  public loading = false;
 
   constructor(
     public translate: TranslateService,
@@ -32,12 +34,48 @@ export class NewPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.newService.getLabels().subscribe(res => {
-      this.typeLabels = res.types;
-      this.toolLabels = res.tools;
-      this.chemicalLabels = res.chemicals;
-      this.locationLabels = res.locations;
-    })
+    this.typeLabels = this.translate.instant('types')
+    this.toolLabels = this.translate.instant('tools')
+    let chemicals = this.translate.instant('chemicals')
+    let locations = this.translate.instant('locations')
+
+    this.chemicalLabels = [
+      Object.keys(chemicals).map(chemical => {
+        return {
+          name: chemicals[chemical],
+          value: chemical
+        }
+      }),
+      [...Array(10).keys()].map(key => {
+        return {
+          name: key.toString(),
+          value: key.toString()
+        }
+      })
+    ]
+
+    this.locationLabels = [
+      Object.keys(locations.zones).map(zone => {
+        return {
+          name: locations.zones[zone],
+          value: zone
+        }
+      }),
+      Object.keys(locations.rows).map(zone => {
+        return {
+          name: locations.rows[zone],
+          value: zone
+        }
+      }),
+      Object.keys(locations.plants).map(zone => {
+        return {
+          name: locations.plants[zone],
+          value: zone
+        }
+      })
+    ]
+    console.log(this.locationLabels)
+    console.log(this.chemicalLabels)
   }
 
   back() {
@@ -80,17 +118,20 @@ export class NewPage implements OnInit {
 
   async openChemicals() {
     let callback = (values) => {
-      this.newItem.chemicals = values;
+      let chemical = {
+        name: values[0].value,
+        amount: parseInt(values[1].value),
+      };
+      this.newItem.chemicals = [chemical];
     }
-    let selected = this.newItem.chemicals ? this.newItem.chemicals.map(value => this.chemicalLabels[value.name]) : [];
-    console.log(selected)
-    let alert = await this.openSelectAlert(this.translate.instant('new.chemicals'), true, this.chemicalLabels, selected, callback);
-    await alert.present();
+
+    let picker = await this.openPicker(this.chemicalLabels, callback);
+    await picker.present();
   }
 
   getChemicalLabel() {
     if (this.newItem.chemicals) {
-      return this.newItem.chemicals.map(chemical => this.chemicalLabels[chemical.name]).join(', ')
+      return this.newItem.chemicals.map(chemical => `${chemical.amount}x ${this.chemicalLabels[0].find(chemicalLabel => chemical.name === chemicalLabel.value).name}`).join(', ')
     } else {
       return this.translate.instant('new.chemicals')
     }
@@ -133,11 +174,11 @@ export class NewPage implements OnInit {
 
   async openLocationStart() {
     let callback = (values) => {
-      let point = new Point(
-        values[0].value,
-        values[1].value,
-        values[2].value
-      );
+      let point = new Point({
+        zone: values[0].value,
+        row: values[1].value,
+        plant: values[2].value
+      });
       this.newItem.locationIni = point;
     }
 
@@ -158,11 +199,11 @@ export class NewPage implements OnInit {
 
   async openLocationEnd() {
     let callback = (values) => {
-      let point = new Point(
-        values[0].value,
-        values[1].value,
-        values[2].value
-      );
+      let point = new Point({
+        zone: values[0].value,
+        row: values[1].value,
+        plant: values[2].value
+      });
       this.newItem.locationEnd = point;
     }
 
@@ -272,5 +313,32 @@ export class NewPage implements OnInit {
       })
     };
     return this.pickerController.create(options);
+  }
+
+  isValid() {
+    if (
+      !this.loading &&
+      this.newItem.name &&
+      this.newItem.tools && this.newItem.tools.length > 0 &&
+      this.newItem.chemicals && this.newItem.chemicals.length > 0 &&
+      this.newItem.startDate &&
+      this.newItem.endDate &&
+      this.newItem.locationIni &&
+      this.newItem.locationEnd
+    ) {
+      return true
+    }
+    return false
+  }
+
+  createTask() {
+    this.loading = true;
+    this.newService.createTask(this.newItem)
+      .subscribe(() => {
+        this.loading = false;
+        this.navCtrl.navigateRoot('home')
+      }, () => {
+        this.loading = false;
+      })
   }
 }

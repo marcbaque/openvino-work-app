@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { SheetState } from 'ion-bottom-sheet'
 import { AuthService } from '../core/auth.service';
 import { HomeService } from './home.service';
