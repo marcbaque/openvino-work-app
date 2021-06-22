@@ -1,7 +1,7 @@
 <ion-content class="home-page">
   <div class="container">
     <div class="header">
-      <div class="title">{{ 'home.title' | translate }}</div>
+      <div class="title">{{ 'tasks-app.home.title' | translate }}</div>
       <div class="actions">
         <ion-icon name="person-outline" (click)="openProfile()"></ion-icon>
         <ion-icon name="add-outline" style="font-size: 2.6rem;" (click)="newItem()"></ion-icon>
@@ -11,7 +11,7 @@
       <work-item *ngFor="let work of workList" [item]="work"></work-item>
     </div>
     <div class="empty-state" *ngIf="!workList || workList.length <= 0">
-      {{ 'home.empty-state' | translate }}
+      {{ 'tasks-app.home.empty-state' | translate }}
     </div>
   </div>
 </ion-content>
@@ -24,7 +24,7 @@
   <ion-item>
     <ion-icon name="person-circle-outline" slot="start"></ion-icon>
     <ion-label>
-      <h3>{{ 'home.public-key' | translate }}</h3>
+      <h3>{{ 'tasks-app.home.public-key' | translate }}</h3>
       <p> {{ account }} </p>
     </ion-label>
     <ion-button fill="clear" slot="end" (click)="copyPublicKey()">
@@ -34,7 +34,7 @@
   <ion-item *ngIf="domain">
     <ion-icon name="at-outline" slot="start"></ion-icon>
     <ion-label>
-      <h3>{{ 'home.domain' | translate }}</h3>
+      <h3>{{ 'tasks-app.home.domain' | translate }}</h3>
       <p> {{ domain }} </p>
     </ion-label>
   </ion-item>

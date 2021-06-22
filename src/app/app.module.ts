@@ -15,7 +15,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'https://costaflores.openvino.exchange/language/', '');
 }
 
 @NgModule({

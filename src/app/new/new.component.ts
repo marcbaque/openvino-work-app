@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonDatetime, NavController, PickerController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { RSA_X931_PADDING } from 'constants';
 import { Point, WorkModel } from '../home/work.model';
 import { NewService } from './new.service';
 
@@ -17,8 +18,8 @@ export class NewPage implements OnInit {
 
   public newItem: WorkModel = new WorkModel();
 
-  public typeLabels = {};
   public toolLabels = {};
+  public typeLabels: { name: string, description:string }[][];
   public chemicalLabels: { name: string, value: string }[][];
   public locationLabels: { name: string, value: string }[][];
 
@@ -34,11 +35,25 @@ export class NewPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.typeLabels = this.translate.instant('types')
-    this.toolLabels = this.translate.instant('tools')
-    let chemicals = this.translate.instant('chemicals')
-    let locations = this.translate.instant('locations')
+    this.toolLabels = this.translate.instant('tasks.tools')
+    let taskType = this.translate.instant('tasks.types')
+    let chemicals = this.translate.instant('tasks.labels.chemicals')
+    let locations = this.translate.instant('tasks.locations')
 
+
+    this.typeLabels = [
+      Object.keys(taskType).map(type => {
+        console.log(taskType[type].name)
+
+        return {
+          name: taskType[type].name,
+          description:taskType[type].description
+        }
+      })
+    ]
+
+    
+  
     this.chemicalLabels = [
       Object.keys(chemicals).map(chemical => {
         return {
@@ -61,50 +76,62 @@ export class NewPage implements OnInit {
           value: zone
         }
       }),
-      Object.keys(locations.rows).map(zone => {
-        return {
-          name: locations.rows[zone],
-          value: zone
-        }
-      }),
-      Object.keys(locations.plants).map(zone => {
-        return {
-          name: locations.plants[zone],
-          value: zone
-        }
-      })
+      locations.rows = [
+        {name: "row_1", value: "1"},
+        {name: "row_2", value: "2"},
+        {name: "row_3", value: "3"},
+        {name: "row_4", value: "4"}
+
+      ],
+      locations.plants = [
+        {name: "plant_1", value: "1"},
+        {name: "plant_2", value: "2"},
+        {name: "plant_3", value: "3"},
+        {name: "plant_4", value: "4"},
+        {name: "plant_5", value: "5"},
+        {name: "plant_6", value: "6"},
+        {name: "plant_7", value: "7"}
+      ],
+
     ]
-    console.log(this.locationLabels)
-    console.log(this.chemicalLabels)
+    console.log(this.locationLabels, "location labels")
+    console.log(this.chemicalLabels, "chem labels")
   }
 
   back() {
     this.navCtrl.navigateBack('home')
   }
 
+
   async openTaskType() {
-    let callback = (value) => {
-      this.newItem.name = value;
+    let callback = (values) => {
+      let taskType = {
+        name: values[0].value,
+     description: values[1].value
+      };
+      this.newItem.types = [taskType];
     }
-    let alert = await this.openSelectAlert(this.translate.instant('new.type'), false, this.typeLabels, [this.typeLabels[this.newItem.name]], callback);
-    await alert.present();
+
+    let picker = await this.openPicker(this.typeLabels, callback);
+    await picker.present();
   }
 
-  getTaskTypeLabel() {
-    if (this.newItem.name) {
-      return this.typeLabels[this.newItem.name]
+  getTaskType() {
+    if (this.newItem.chemicals) {
+      return this.newItem.chemicals.map(chemical => `${chemical.amount}x ${this.chemicalLabels[0].find(chemicalLabel => chemical.name === chemicalLabel.value).name}`).join(', ')
     } else {
-      return this.translate.instant('new.type')
+      return this.translate.instant('tasks.labels.chemicals')
     }
   }
 
+  
   async openTools() {
     let callback = (values) => {
       this.newItem.tools = values;
     }
 
     let selected = this.newItem.tools ? this.newItem.tools : [];
-    let alert = await this.openSelectAlert(this.translate.instant('new.tools'), true, this.toolLabels, selected, callback);
+    let alert = await this.openSelectAlert(this.translate.instant('tasks.labels.tools'), true, this.toolLabels, selected, callback);
     await alert.present();
   }
 
@@ -112,7 +139,7 @@ export class NewPage implements OnInit {
     if (this.newItem.tools) {
       return this.newItem.tools.map(tool => this.toolLabels[tool]).join(', ')
     } else {
-      return this.translate.instant('new.tools')
+      return this.translate.instant('tasks.labels.tools')
     }
   }
 
@@ -133,7 +160,7 @@ export class NewPage implements OnInit {
     if (this.newItem.chemicals) {
       return this.newItem.chemicals.map(chemical => `${chemical.amount}x ${this.chemicalLabels[0].find(chemicalLabel => chemical.name === chemicalLabel.value).name}`).join(', ')
     } else {
-      return this.translate.instant('new.chemicals')
+      return this.translate.instant('tasks.labels.chemicals')
     }
   }
 
@@ -150,7 +177,7 @@ export class NewPage implements OnInit {
     if (this.newItem.startDate) {
       return this.datePipe.transform(this.newItem.startDate, 'd/M/yy, HH:mm')
     } else {
-      return this.translate.instant('new.start')
+      return this.translate.instant('tasks.labels.start')
     }
   }
 
@@ -167,7 +194,7 @@ export class NewPage implements OnInit {
     if (this.newItem.endDate) {
       return this.datePipe.transform(this.newItem.endDate, 'd/M/yy, HH:mm')
     } else {
-      return this.translate.instant('new.end')
+      return this.translate.instant('tasks.labels.end')
     }
   }
 
@@ -193,7 +220,7 @@ export class NewPage implements OnInit {
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationIni.plant).name;
       return `${zone} ${row} ${plant}`
     } else {
-      return this.translate.instant('new.location-start')
+      return this.translate.instant('tasks.labels.location-start')
     }
   }
 
@@ -218,7 +245,7 @@ export class NewPage implements OnInit {
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationEnd.plant).name;
       return `${zone} ${row} ${plant}`
     } else {
-      return this.translate.instant('new.location-end')
+      return this.translate.instant('tasks.labels.location-end')
     }
   }
 
@@ -228,7 +255,7 @@ export class NewPage implements OnInit {
       this.newItem.notes = value && value[0];
     }
 
-    let alert = await this.openTextAreaAlert(this.translate.instant('new.notes'), this.newItem.notes, callback);
+    let alert = await this.openTextAreaAlert(this.translate.instant('tasks.labels.notes'), this.newItem.notes, callback);
     await alert.present();
   }
 
@@ -236,7 +263,7 @@ export class NewPage implements OnInit {
     if (this.newItem.notes) {
       return this.newItem.notes
     } else {
-      return this.translate.instant('new.notes')
+      return this.translate.instant('tasks.labels.notes')
     }
   }
 

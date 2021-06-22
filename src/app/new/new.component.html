@@ -2,14 +2,14 @@
   <div class="container">
     <div class="header">
       <i class="back eva eva-arrow-back-outline" (click)="back()"></i>
-      {{ 'new.title' | translate }}
+      {{ 'tasks-app.new.title' | translate }}
     </div>
     <div class="content">
       <ion-datetime #startDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:00Z"></ion-datetime>
       <ion-datetime #endDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:01Z"></ion-datetime>
       <new-item 
         icon="alert-circle-outline" 
-        [label]="getTaskTypeLabel()" 
+        [label]="" 
         [completed]="newItem.name" 
         (onClick)="openTaskType()"
       ></new-item>
