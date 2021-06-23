@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { isDefined } from '@angular/compiler/src/util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonDatetime, NavController, PickerController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +20,7 @@ export class NewPage implements OnInit {
   public newItem: WorkModel = new WorkModel();
 
   public toolLabels = {};
-  public typeLabels: { name: string, description:string }[][];
+  public typeLabels: { name: string, value:string }[][];
   public chemicalLabels: { name: string, value: string }[][];
   public locationLabels: { name: string, value: string }[][];
 
@@ -37,31 +38,27 @@ export class NewPage implements OnInit {
   ngOnInit() {
     this.toolLabels = this.translate.instant('tasks.tools')
     let taskType = this.translate.instant('tasks.types')
-    let chemicals = this.translate.instant('tasks.labels.chemicals')
+    let chemicals = this.translate.instant('tasks.chemicals')
     let locations = this.translate.instant('tasks.locations')
 
 
     this.typeLabels = [
-      Object.keys(taskType).map(type => {
-        console.log(taskType[type].name)
-
+      Object.keys(taskType).map(id => {
         return {
-          name: taskType[type].name,
-          description:taskType[type].description
+          name: taskType[id].name,
+          value: id
         }
       })
     ]
 
-    
-  
     this.chemicalLabels = [
-      Object.keys(chemicals).map(chemical => {
+      Object.keys(chemicals).map(id => {
         return {
-          name: chemicals[chemical],
-          value: chemical
+          name: chemicals[id].name,
+          value: id
         }
       }),
-      [...Array(10).keys()].map(key => {
+      [...Array(100).keys()].map(key => {
         return {
           name: key.toString(),
           value: key.toString()
@@ -94,8 +91,6 @@ export class NewPage implements OnInit {
       ],
 
     ]
-    console.log(this.locationLabels, "location labels")
-    console.log(this.chemicalLabels, "chem labels")
   }
 
   back() {
@@ -105,11 +100,7 @@ export class NewPage implements OnInit {
 
   async openTaskType() {
     let callback = (values) => {
-      let taskType = {
-        name: values[0].value,
-     description: values[1].value
-      };
-      this.newItem.types = [taskType];
+      this.newItem.type = values[0].value;
     }
 
     let picker = await this.openPicker(this.typeLabels, callback);
@@ -117,10 +108,10 @@ export class NewPage implements OnInit {
   }
 
   getTaskType() {
-    if (this.newItem.chemicals) {
-      return this.newItem.chemicals.map(chemical => `${chemical.amount}x ${this.chemicalLabels[0].find(chemicalLabel => chemical.name === chemicalLabel.value).name}`).join(', ')
+    if (this.newItem.type) {
+      return this.typeLabels[0].filter(item => item.value == this.newItem.type)[0].name
     } else {
-      return this.translate.instant('tasks.labels.chemicals')
+      return this.translate.instant('tasks.labels.type')
     }
   }
 
@@ -136,7 +127,7 @@ export class NewPage implements OnInit {
   }
 
   getToolsLabel() {
-    if (this.newItem.tools) {
+    if (this.newItem.tools && this.newItem.tools.length > 0) {
       return this.newItem.tools.map(tool => this.toolLabels[tool]).join(', ')
     } else {
       return this.translate.instant('tasks.labels.tools')
@@ -157,7 +148,7 @@ export class NewPage implements OnInit {
   }
 
   getChemicalLabel() {
-    if (this.newItem.chemicals) {
+    if (this.newItem.chemicals && this.newItem.chemicals.length > 0) {
       return this.newItem.chemicals.map(chemical => `${chemical.amount}x ${this.chemicalLabels[0].find(chemicalLabel => chemical.name === chemicalLabel.value).name}`).join(', ')
     } else {
       return this.translate.instant('tasks.labels.chemicals')
@@ -251,7 +242,6 @@ export class NewPage implements OnInit {
 
   async openNotes() {
     let callback = (value) => {
-      console.log(value)
       this.newItem.notes = value && value[0];
     }
 
@@ -345,7 +335,7 @@ export class NewPage implements OnInit {
   isValid() {
     if (
       !this.loading &&
-      this.newItem.name &&
+      this.newItem.type != undefined &&
       this.newItem.tools && this.newItem.tools.length > 0 &&
       this.newItem.chemicals && this.newItem.chemicals.length > 0 &&
       this.newItem.startDate &&
@@ -353,6 +343,7 @@ export class NewPage implements OnInit {
       this.newItem.locationIni &&
       this.newItem.locationEnd
     ) {
+      console.log(this.newItem)
       return true
     }
     return false

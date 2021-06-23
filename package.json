@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@capacitor/core": "2.4.6",
-    "@enchainte/sdk": "^1.1.2",
+    "@enchainte/sdk": "^1.2.0",
     "@ensdomains/ensjs": "^2.0.0",
     "@ionic-native/clipboard": "^5.31.1",
     "@ionic-native/core": "^5.0.0",

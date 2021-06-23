@@ -1,5 +1,5 @@
 export class WorkModel {
-    public types: {name: string, description: string}[];
+    public type: string;
     public name: string;
     public tools: string[];
     public chemicals: {name: string, amount: number}[];

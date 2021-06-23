@@ -9,20 +9,20 @@
       <ion-datetime #endDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:01Z"></ion-datetime>
       <new-item 
         icon="alert-circle-outline" 
-        [label]="" 
-        [completed]="newItem.name" 
+        [label]="getTaskType()" 
+        [completed]="newItem.type != undefined" 
         (onClick)="openTaskType()"
       ></new-item>
       <new-item 
         icon="scissors-outline" 
         [label]="getToolsLabel()" 
-        [completed]="newItem.tools" 
+        [completed]="newItem.tools && newItem.tools.length > 0" 
         (onClick)="openTools()"
       ></new-item>
       <new-item 
         icon="alert-circle-outline" 
         [label]="getChemicalLabel()" 
-        [completed]="newItem.chemicals" 
+        [completed]="newItem.chemicals && newItem.chemicals.length > 0" 
         (onClick)="openChemicals()"
       ></new-item>
       <new-item 

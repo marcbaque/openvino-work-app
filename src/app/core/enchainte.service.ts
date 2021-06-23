@@ -21,7 +21,7 @@ export class EnchainteService {
 
   public write(data: any): Observable<string> {
     return defer(async () => {
-      let message = Message.from(data);
+      let message = Message.fromObject(data);
       await this.sdk.sendMessages([message])
       return message.getHash()
     })
