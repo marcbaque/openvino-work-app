@@ -8,7 +8,7 @@
       <ion-datetime #startDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:00Z"></ion-datetime>
       <ion-datetime #endDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:01Z"></ion-datetime>
       <new-item 
-        icon="alert-circle-outline" 
+        icon="layers-outline" 
         [label]="getTaskType()" 
         [completed]="newItem.type != undefined" 
         (onClick)="openTaskType()"
@@ -20,7 +20,7 @@
         (onClick)="openTools()"
       ></new-item>
       <new-item 
-        icon="alert-circle-outline" 
+        icon="funnel-outline" 
         [label]="getChemicalLabel()" 
         [completed]="newItem.chemicals && newItem.chemicals.length > 0" 
         (onClick)="openChemicals()"

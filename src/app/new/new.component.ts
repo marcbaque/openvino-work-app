@@ -58,13 +58,17 @@ export class NewPage implements OnInit {
           value: id
         }
       }),
-      [...Array(100).keys()].map(key => {
+      [...Array(101).keys()].map(key => {
         return {
           name: key.toString(),
           value: key.toString()
         }
       })
     ]
+
+ /*    var letterArray = String.fromCharCode([...Array(101)])
+    var res = String.fromCharCode(65);
+    console.log(res) */
 
     this.locationLabels = [
       Object.keys(locations.zones).map(zone => {
@@ -73,25 +77,31 @@ export class NewPage implements OnInit {
           value: zone
         }
       }),
-      locations.rows = [
-        {name: "row_1", value: "1"},
-        {name: "row_2", value: "2"},
-        {name: "row_3", value: "3"},
-        {name: "row_4", value: "4"}
 
-      ],
-      locations.plants = [
-        {name: "plant_1", value: "1"},
-        {name: "plant_2", value: "2"},
-        {name: "plant_3", value: "3"},
-        {name: "plant_4", value: "4"},
-        {name: "plant_5", value: "5"},
-        {name: "plant_6", value: "6"},
-        {name: "plant_7", value: "7"}
-      ],
+
+      locations.rows = [...Array(101).keys()].map(key => {
+        return {
+          name: "Row " + key.toString(),
+          value: key.toString()
+        }
+      }),
+      locations.plants = [...Array(8).keys()].map(key => {
+        return {
+          name: "Plant " + key.toString(),
+          value: key.toString()
+        }
+      }),
+      
+      locations.claro = [...Array(19).keys()].map(key => {
+        return {
+          name: "Claro " + key.toString(),
+          value: key.toString()
+        }
+      }),
 
     ]
   }
+
 
   back() {
     this.navCtrl.navigateBack('home')
@@ -195,7 +205,8 @@ export class NewPage implements OnInit {
       let point = new Point({
         zone: values[0].value,
         row: values[1].value,
-        plant: values[2].value
+        plant: values[2].value,
+        claro: values[3].value
       });
       this.newItem.locationIni = point;
     }
@@ -209,7 +220,9 @@ export class NewPage implements OnInit {
       let zone = this.locationLabels[0].find(item => item.value == this.newItem.locationIni.zone).name;
       let row = this.locationLabels[1].find(item => item.value == this.newItem.locationIni.row).name;
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationIni.plant).name;
-      return `${zone} ${row} ${plant}`
+      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationEnd.claro).name;
+
+      return `${zone} ${row} ${plant} ${claro}`
     } else {
       return this.translate.instant('tasks.labels.location-start')
     }
@@ -220,7 +233,8 @@ export class NewPage implements OnInit {
       let point = new Point({
         zone: values[0].value,
         row: values[1].value,
-        plant: values[2].value
+        plant: values[2].value,
+        claro: values[3].value
       });
       this.newItem.locationEnd = point;
     }
@@ -234,7 +248,8 @@ export class NewPage implements OnInit {
       let zone = this.locationLabels[0].find(item => item.value == this.newItem.locationEnd.zone).name;
       let row = this.locationLabels[1].find(item => item.value == this.newItem.locationEnd.row).name;
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationEnd.plant).name;
-      return `${zone} ${row} ${plant}`
+      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationEnd.claro).name;
+      return `${zone} ${row} ${plant} ${claro}`
     } else {
       return this.translate.instant('tasks.labels.location-end')
     }

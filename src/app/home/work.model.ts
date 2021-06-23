@@ -39,14 +39,16 @@ export class Point {
     public zone: string;
     public row: string;
     public plant: string;
+    public claro: string;
 
     constructor(data: {
-        zone: string, row: string, plant: string
+        zone: string, row: string, plant: string, claro:string
     }) {
         if (data) {
             this.zone = data.zone;
             this.row = data.row;
             this.plant = data.plant;
+            this.claro = data.claro;
         }
     }
 }
