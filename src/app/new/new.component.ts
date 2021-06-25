@@ -53,6 +53,7 @@ export class NewPage implements OnInit {
 
     this.chemicalLabels = [
       Object.keys(chemicals).map(id => {
+        console.log(chemicals)
         return {
           name: chemicals[id].name,
           value: id
@@ -66,9 +67,6 @@ export class NewPage implements OnInit {
       })
     ]
 
- /*    var letterArray = String.fromCharCode([...Array(101)])
-    var res = String.fromCharCode(65);
-    console.log(res) */
 
     this.locationLabels = [
       Object.keys(locations.zones).map(zone => {
@@ -92,10 +90,10 @@ export class NewPage implements OnInit {
         }
       }),
       
-      locations.claro = [...Array(19).keys()].map(key => {
+      locations.claro = [...Array(18).keys()].map(key => {
         return {
-          name: "Claro " + key.toString(),
-          value: key.toString()
+          name: "Claro " + String.fromCharCode( 65 + key),
+          value: String.fromCharCode( 65 + key)
         }
       }),
 
@@ -146,6 +144,7 @@ export class NewPage implements OnInit {
 
   async openChemicals() {
     let callback = (values) => {
+      console.log(values)
       let chemical = {
         name: values[0].value,
         amount: parseInt(values[1].value),
@@ -220,7 +219,7 @@ export class NewPage implements OnInit {
       let zone = this.locationLabels[0].find(item => item.value == this.newItem.locationIni.zone).name;
       let row = this.locationLabels[1].find(item => item.value == this.newItem.locationIni.row).name;
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationIni.plant).name;
-      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationEnd.claro).name;
+      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationIni.claro).name;
 
       return `${zone} ${row} ${plant} ${claro}`
     } else {
