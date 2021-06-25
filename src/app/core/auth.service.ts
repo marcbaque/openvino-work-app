@@ -77,31 +77,24 @@ export class AuthService {
   }
 
   public authenticate(): Observable<string> {
-    let authenticated = this.isAuthenticated();
-    
-    if (authenticated) {
-      let token = localStorage.getItem('openvino.token');
-      return of(token)
-    } else {
-      let userAccount = this.getAccount()
-      return this.http.get(`${environment.apiUrl}/auth?public_key=${userAccount}`).pipe(
-        map((res: any) => {
-          localStorage.setItem('openvino.expire', res.expire);
-          localStorage.setItem('openvino.role', res.role);
-          localStorage.setItem('openvino.integrity', res.integrity);
-          localStorage.setItem('openvino.address', res.address);
-          return res;
-        }),
-        flatMap(res => {
-          let message = `${res.address}$${res.expire}$${res.integrity}$${res.role}`
-          return this.signMessage(message, this.getPrivateKey())
-        }),
-        map(signature => {
-          localStorage.setItem('openvino.token', signature);
-          return signature;
-        })
-      )
-    }
+    let userAccount = this.getAccount()
+    return this.http.get(`${environment.apiUrl}/auth?public_key=${userAccount}`).pipe(
+      map((res: any) => {
+        localStorage.setItem('openvino.expire', res.expire);
+        localStorage.setItem('openvino.role', res.role);
+        localStorage.setItem('openvino.integrity', res.integrity);
+        localStorage.setItem('openvino.address', res.address);
+        return res;
+      }),
+      flatMap(res => {
+        let message = `${res.address}$${res.expire}$${res.integrity}$${res.role}`
+        return this.signMessage(message, this.getPrivateKey())
+      }),
+      map(signature => {
+        localStorage.setItem('openvino.token', signature);
+        return signature;
+      })
+    )
   }
 
   public getRole(): 'Manager' | 'Minter' | 'Guest' {
