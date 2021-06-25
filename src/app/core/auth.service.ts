@@ -52,6 +52,9 @@ export class AuthService {
 
   public getAccount() {
     let mnemonic = localStorage.getItem('openvino.mnemonic');
+    if (!mnemonic) {
+      return null
+    }
     let seed = BIP39.mnemonicToSeedSync(mnemonic);
     let privKey = hdkey.fromMasterSeed(seed).derivePath(`m/44'/60'/0'/0`).getWallet().getPrivateKey();
     console.log(privKey.toString('hex'))

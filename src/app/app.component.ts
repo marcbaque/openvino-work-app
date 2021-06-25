@@ -29,10 +29,14 @@ export class AppComponent {
     if (authenticated) {
       this.navController.navigateRoot('home')
     } else {
-      this.authService.authenticate().subscribe(res => {
-        if (res) return this.navController.navigateRoot('home');
-        return this.navController.navigateRoot('login');
-      });
+      if (this.authService.getAccount()) {
+        this.authService.authenticate().subscribe(res => {
+          if (res) return this.navController.navigateRoot('home');
+          return this.navController.navigateRoot('login');
+        });
+      } else {
+        this.navController.navigateRoot('login');
+      }
     }
 
     this.translate.setDefaultLang('en');
