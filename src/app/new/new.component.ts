@@ -144,7 +144,6 @@ export class NewPage implements OnInit {
 
   async openChemicals() {
     let callback = (values) => {
-      console.log(values)
       let chemical = {
         name: values[0].value,
         amount: parseInt(values[1].value),
