@@ -53,7 +53,6 @@ export class NewPage implements OnInit {
 
     this.chemicalLabels = [
       Object.keys(chemicals).map(id => {
-        console.log(chemicals)
         return {
           name: chemicals[id].name,
           value: id
@@ -356,7 +355,6 @@ export class NewPage implements OnInit {
       this.newItem.locationIni &&
       this.newItem.locationEnd
     ) {
-      console.log(this.newItem)
       return true
     }
     return false

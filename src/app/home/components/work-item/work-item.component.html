@@ -1,13 +1,10 @@
 <div class="container">
   <div class="title">
-    {{ typeLabels[item.name] }}
+   {{ typeLabels[item.name].name }}
   </div>
   <div class="footer">
-    <div class="date">
-      {{ item.startDate | date: 'd/M/yy'}}
-    </div>
-    <div class="hour">
-      {{ item.startDate | date: 'HH:mm'}} - {{ item.endDate | date: 'HH:mm'}}
-    </div>
+      {{ item.startDate | date: 'dd/MM/yy'}},  {{ item.startDate | date: 'HH:mm'}}h - {{ item.endDate | date: 'HH:mm'}}h
   </div>
+
+
 </div>

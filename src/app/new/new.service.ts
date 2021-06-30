@@ -32,7 +32,7 @@ export class NewService {
       end_claro: task.locationEnd.zone,
       end_row: parseInt(task.locationEnd.row),
       end_plant: parseInt(task.locationEnd.plant),
-      task_id: parseInt(task.name),
+      task_id: parseInt(task.type),
       tools_used: task.tools.map(tool => parseInt(tool)),
       chemicals: task.chemicals.map(chemical => parseInt(chemical.name)),
       chemicals_amount: task.chemicals.map(chemical => chemical.amount),

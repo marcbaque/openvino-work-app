@@ -16,7 +16,7 @@ export class WorkItemComponent {
   constructor(
     translate: TranslateService
   ) {
-    this.typeLabels = translate.instant('types');
+    this.typeLabels = translate.instant('tasks.types');
   }
 
 }
