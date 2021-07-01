@@ -31,6 +31,9 @@ export class HomePage {
       .subscribe(res => {
         this.domain = res;
       })
+  }
+
+  ionViewWillEnter() {
     this.homeService.getTasks()
       .subscribe(res => {
         this.workList = res;
