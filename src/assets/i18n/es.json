@@ -1,0 +1,63 @@
+{
+    "login": {
+        "create": "Crear cuenta",
+        "import": "Importar cuenta",
+        "copy": "Copiar",
+        "next": "Siguiente",
+        "enter-mnemonic": "Introduce el nemónico..."
+    },
+    "home": {
+        "title": "Lista de tareas",
+        "public-key": "Llave pública",
+        "domain": "Dominio",
+        "empty-state": "No hay tareas"
+    },
+    "new": {
+        "title": "Crear nueva tarea",
+        "type": "Tipo de tarea",
+        "tools": "Herramientas",
+        "chemicals": "Químicos",
+        "start": "Fecha de inicio",
+        "end": "Fecha de finalización",
+        "location-start": "Localización inicial",
+        "location-end": "Localización final",
+        "notes": "Notas"
+    },
+    "types": {
+        "0": "Tarea 0",
+        "1": "Tarea 1",
+        "2": "Tarea 2",
+        "3": "Tarea 3"
+    },
+    "chemicals": {
+        "1": "Químico 1",
+        "2": "Químico 2",
+        "3": "Químico 3",
+        "4": "Químico 4"
+    },
+    "tools": {
+        "1": "Herramienta 1",
+        "2": "Herramienta 2",
+        "3": "Herramienta 3",
+        "4": "Herramienta 4"
+    },
+    "locations": {
+        "zones": {
+            "cabernet1": "Cabernet 1",
+            "cabernet2": "Cabernet 2",
+            "cabernet3": "Cabernet 3",
+            "cabernet4": "Cabernet 4",
+            "cabernet5": "Cabernet 5"
+        },
+        "rows": {
+            "1": "R1",
+            "2": "R2",
+            "3": "R3"
+        },
+        "plants": {
+            "1": "P1",
+            "2": "P2",
+            "3": "P3"
+        }
+    }
+}
