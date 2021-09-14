@@ -46,7 +46,7 @@ export class AuthService {
   public getPrivateKey() {
     let mnemonic = localStorage.getItem('openvino.mnemonic');
     let seed = BIP39.mnemonicToSeedSync(mnemonic);
-    let privKey = hdkey.fromMasterSeed(seed).derivePath(`m/44'/60'/0'/0`).getWallet().getPrivateKey();
+    let privKey = hdkey.fromMasterSeed(seed).derivePath(`m/44'/60'/0'/0/0`).getWallet().getPrivateKey();
     return privKey.toString('hex')
   }
 
@@ -56,10 +56,10 @@ export class AuthService {
       return null
     }
     let seed = BIP39.mnemonicToSeedSync(mnemonic);
-    let privKey = hdkey.fromMasterSeed(seed).derivePath(`m/44'/60'/0'/0`).getWallet().getPrivateKey();
-    console.log(privKey.toString('hex'))
+    let privKey = hdkey.fromMasterSeed(seed).derivePath(`m/44'/60'/0'/0/0`).getWallet().getPrivateKey();
     const pubKey = Wallet.default.fromPrivateKey(privKey).getPublicKey();
     const address = keccak256(pubKey)
+    console.log(mnemonic, address.substring(address.length - 40, address.length), privKey.toString('hex'))
     return "0x" + address.substring(address.length - 40, address.length)
   }
 
