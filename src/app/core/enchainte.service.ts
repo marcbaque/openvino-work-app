@@ -1,35 +1,29 @@
-import { Injectable } from '@angular/core';
-import { EnchainteClient, Message } from '@enchainte/sdk';
-import { defer, from, Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Proof } from '@enchainte/sdk/dist/types/proof/entity/proof.entity';
+import { Injectable } from "@angular/core";
+import { BloockClient, Proof, Record } from "@bloock/sdk";
+import { defer, from, Observable } from "rxjs";
+import { flatMap, map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EnchainteService {
+  private sdk: BloockClient;
 
-  private sdk: EnchainteClient;
-
-  constructor(
-    public http: HttpClient
-  ) {
-    this.sdk = new EnchainteClient(environment.apiKey);
+  constructor(public http: HttpClient) {
+    this.sdk = new BloockClient(environment.apiKey);
   }
 
   public write(data: any): Observable<string> {
     return defer(async () => {
-      let message = Message.fromObject(data);
-      await this.sdk.sendMessages([message])
-      return message.getHash()
-    })
+      let message = Record.fromObject(data);
+      await this.sdk.sendRecords([message]);
+      return message.getHash();
+    });
   }
 
-  
-
-  public verify(proof: Proof) {
-    return this.sdk.verifyProof(proof)
+  public async verify(proof: Proof) {
+    return (await this.sdk.verifyProof(proof)) > 0;
   }
 }
