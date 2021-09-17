@@ -195,8 +195,8 @@ export class NewPage implements OnInit {
       let point = new Point({
         zone: values[0].value,
         row: values[1].value,
-        plant: values[2].value,
-        claro: values[3].value
+        plant: values[2].value
+       
       });
       this.newItem.locationIni = point;
     }
@@ -210,9 +210,8 @@ export class NewPage implements OnInit {
       let zone = this.locationLabels[0].find(item => item.value == this.newItem.locationIni.zone).name;
       let row = this.locationLabels[1].find(item => item.value == this.newItem.locationIni.row).name;
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationIni.plant).name;
-      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationIni.claro).name;
 
-      return `${zone} ${row} ${plant} ${claro}`
+      return `${zone} ${row} ${plant} `
     } else {
       return this.translate.instant('tasks.labels.location-start')
     }
@@ -224,7 +223,6 @@ export class NewPage implements OnInit {
         zone: values[0].value,
         row: values[1].value,
         plant: values[2].value,
-        claro: values[3].value
       });
       this.newItem.locationEnd = point;
     }
@@ -238,8 +236,7 @@ export class NewPage implements OnInit {
       let zone = this.locationLabels[0].find(item => item.value == this.newItem.locationEnd.zone).name;
       let row = this.locationLabels[1].find(item => item.value == this.newItem.locationEnd.row).name;
       let plant = this.locationLabels[2].find(item => item.value == this.newItem.locationEnd.plant).name;
-      let claro = this.locationLabels[3].find(item => item.value == this.newItem.locationEnd.claro).name;
-      return `${zone} ${row} ${plant} ${claro}`
+      return `${zone} ${row} ${plant} `
     } else {
       return this.translate.instant('tasks.labels.location-end')
     }
