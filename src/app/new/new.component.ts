@@ -50,6 +50,7 @@ export class NewPage implements OnInit {
         }
       })
     ]
+    console.log(this.typeLabels)
 
     this.chemicalLabels = [
       Object.keys(chemicals).map(id => {
@@ -70,7 +71,7 @@ export class NewPage implements OnInit {
     this.locationLabels = [
       Object.keys(locations.zones).map(zone => {
         return {
-          name: locations.zones[zone],
+          name:  locations.zones[zone],
           value: zone
         }
       }),
@@ -87,15 +88,7 @@ export class NewPage implements OnInit {
           name: "Plant " + key.toString(),
           value: key.toString()
         }
-      }),
-      
-      locations.claro = [...Array(18).keys()].map(key => {
-        return {
-          name: "Claro " + String.fromCharCode( 65 + key),
-          value: String.fromCharCode( 65 + key)
-        }
-      }),
-
+      })
     ]
   }
 
