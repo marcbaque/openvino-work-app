@@ -8,6 +8,12 @@
       <ion-datetime #startDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:00Z"></ion-datetime>
       <ion-datetime #endDateComponent style="display: none;" displayFormat="D MMM YYYY HH:mm" min="2000" max="2040" value="2021-01-01T00:01Z"></ion-datetime>
       <new-item 
+      icon="layers-outline" 
+      [label]="getCategoryType()" 
+      [completed]="newItem.categories != undefined"
+      (onClick)="openCategories()"
+    ></new-item>
+      <new-item 
         icon="layers-outline" 
         [label]="getTaskType()" 
         [completed]="newItem.type != undefined" 

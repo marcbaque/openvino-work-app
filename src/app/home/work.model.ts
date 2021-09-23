@@ -1,4 +1,5 @@
 export class WorkModel {
+    public categories:string[];
     public type: string;
     public name: string;
     public tools: string[];
@@ -8,10 +9,10 @@ export class WorkModel {
     public locationIni: Point;
     public locationEnd: Point;
     public notes: string;
-
     public hash: string;
 
     constructor(data?: {
+        category_id: string[];
         chemicals: string;
         end_claro: string;
         end_plant: number;

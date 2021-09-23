@@ -36,7 +36,10 @@ export class NewService {
       tools_used: task.tools.map(tool => parseInt(tool)),
       chemicals: task.chemicals.map(chemical => parseInt(chemical.name)),
       chemicals_amount: task.chemicals.map(chemical => chemical.amount),
-      notes: task.notes
+      notes: task.notes,
+      category_id: parseInt(task.categories[0]),
+
+      
     }
     
     return this.enchainteService.write(data).pipe(
