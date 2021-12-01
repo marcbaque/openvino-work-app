@@ -34,8 +34,8 @@ export class NewService {
       end_plant: parseInt(task.locationEnd.plant),
       task_id: parseInt(task.type),
       tools_used: task.tools.map(tool => parseInt(tool)),
-      chemicals: task.chemicals.map(chemical => parseInt(chemical.name)),
-      chemicals_amount: task.chemicals.map(chemical => chemical.amount),
+      chemicals: task.chemicals? task.chemicals.map(chemical => parseInt(chemical.name)) : undefined,
+      chemicals_amount: task.chemicals? task.chemicals.map(chemical => chemical.amount) : undefined,
       notes: task.notes,
       category_id: parseInt(task.categories[0]),
 

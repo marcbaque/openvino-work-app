@@ -421,8 +421,6 @@ export class NewPage implements OnInit {
       this.newItem.categories &&
       this.newItem.tools &&
       this.newItem.tools.length > 0 &&
-      this.newItem.chemicals &&
-      this.newItem.chemicals.length > 0 &&
       this.newItem.startDate &&
       this.newItem.endDate &&
       this.newItem.locationIni &&
